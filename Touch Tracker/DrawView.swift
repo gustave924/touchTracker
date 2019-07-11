@@ -45,8 +45,11 @@ class DrawView: UIView{
             stroke(line)
         }
         
-        currentLineColor.setStroke()
+        
         for (_, line) in currentLine {
+            let angle = calculateAngle(line: line)
+            let color = UIColor(displayP3Red: 150, green: CGFloat(abs(angle)), blue: 150, alpha: 1)
+            color.setStroke()
             stroke(line)
         }
     }
@@ -87,4 +90,13 @@ class DrawView: UIView{
         currentLine.removeAll()
         setNeedsDisplay()
     }
+    
+    func calculateAngle(line: Line) -> Double {
+        let xDiff: Double = Double(line.end.x - line.begin.x)
+        let yDiff: Double = Double(line.end.y - line.begin.y)
+        let angle = atan(yDiff/xDiff) * (180 / Double.pi)
+        print(angle)
+        return angle
+    }
+   
 }
